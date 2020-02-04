@@ -40,7 +40,7 @@ EXIT /B 0
 
 :unmount_drive
 rem This function causes some issues, namely the fact that if you wanted to
-rem re-mount the drivw, the OS won't auto assign it a letter anymore, so I've decided to
+rem re-mount the drive, the OS won't auto assign it a letter anymore, so I've decided to
 rem keep it commented out. Maybe in the future better auto-dismount functionallity 
 rem can be added.
 
