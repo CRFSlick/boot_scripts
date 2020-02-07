@@ -16,7 +16,7 @@ function Identify-And_Verify() {
 
     if ((Test-Path -path $Path_1) -and (Test-Path -path $Path_2) -and (Test-Path -path $Path_3)) {
         $global:VOLUME = "$($Drive)"
-        Write-Output "Identified Volume: $($VOLUME):\"
+        Write-Output "Identified volume: $($VOLUME):\"
     }
 }
 
@@ -36,7 +36,7 @@ function Auto-Identify-And_Verify() {
 }
 
 function Create-SSH() {
-    Write-Host "Creating SSH..."
+    Write-Host "Creating ssh..."
     $path = "$($VOLUME):\ssh"
     Set-Content -Path $path -Value ''
 }
@@ -72,6 +72,14 @@ function Create-WPA() {
     Add-Content -Path $path -Value '}'
 }
 
+function Eject-Volume() {
+    #https://superuser.com/questions/1323787/auto-confirm-eject-usb-device-using-powershell-command
+
+    Write-Host "Ejecting volume..."
+    $driveEject = New-Object -comObject Shell.Application
+    $driveEject.Namespace(17).ParseName("$($VOLUME):").InvokeVerb("Eject")
+}
+
 function Main() {
     if ($args[0]) {
         Identify-And_Verify $args
@@ -79,14 +87,16 @@ function Main() {
         Auto-Identify-And_Verify
     }
 
-    if ($Volume -ne "") {
+    if ($VOLUME -ne "") {
         Create-SSH
         Edit-Config
         #Create-WPA
     } else {
-        Write-Host "[ERROR] Could not find mounted volume $($Volume)"
+        Write-Host "[ERROR] Could not find mounted volume $($VOLUME)"
         exit
     }
+    
+    Eject-Volume
 
     Write-Host ""
     Write-Host "Done."
