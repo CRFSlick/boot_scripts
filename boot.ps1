@@ -16,7 +16,7 @@ function Identify-And_Verify() {
 
     if ((Test-Path -path $Path_1) -and (Test-Path -path $Path_2) -and (Test-Path -path $Path_3)) {
         $global:VOLUME = "$($Drive)"
-        Write-Output "Identified volume: $($VOLUME):\"
+        Write-Host "Identified volume: $($VOLUME):\"
     }
 }
 
@@ -30,7 +30,7 @@ function Auto-Identify-And_Verify() {
 
         if ((Test-Path -path $Path_1) -and (Test-Path -path $Path_2) -and (Test-Path -path $Path_3)) {
             $global:VOLUME = "$($Drive.DriveLetter)"
-            Write-Output "Identified Volume: $($VOLUME):\"
+            Write-Host "Identified Volume: $($VOLUME):\"
         }
     }
 }
